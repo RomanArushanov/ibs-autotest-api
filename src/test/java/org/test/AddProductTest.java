@@ -26,13 +26,14 @@ public class AddProductTest extends BaseTest {
         APIUtils.postProduct(newProduct);
 
         //Проверяем, что продукт добавленный через API совпадает с продуктом в DB
-        Assertions.assertEquals(newProduct, DBUtils.selectProduct(newProduct, jdbcTemplate));
+        Assertions.assertEquals(newProduct, DBUtils.selectProduct(newProduct, jdbcTemplate),
+                "Продукты не одинаковые");
 
         //Удаляем продукт через API
         APIUtils.resetProduct();
 
         //Проверяем, что продукт удалился из DB
-        Assertions.assertNull(DBUtils.selectProduct(newProduct, jdbcTemplate));
+        Assertions.assertNull(DBUtils.selectProduct(newProduct, jdbcTemplate), "Продукт не удалился");
     }
 
 }
