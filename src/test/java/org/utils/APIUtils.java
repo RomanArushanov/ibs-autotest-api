@@ -38,4 +38,24 @@ public class APIUtils {
                 .assertThat()
                 .statusCode(200);
     }
+
+    public static String getJSessionId() {
+        String jsessionid = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .get(Constant.API_FOOD)
+                .then()
+                .extract()
+                .cookie("JSESSIONID");
+        return jsessionid;
+    }
+
+    public static Product getLastProduct() {
+        Product[] productList = given()
+                .when()
+                .get(Constant.API_FOOD)
+                .as(Product[].class);
+
+        return productList[productList.length - 1];
+    }
 }

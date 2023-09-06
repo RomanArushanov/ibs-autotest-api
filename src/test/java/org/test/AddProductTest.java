@@ -25,6 +25,9 @@ public class AddProductTest extends BaseTest {
         //Добавляем новый продукт через API
         APIUtils.postProduct(newProduct);
 
+        //Проверяем, что продукт добавился через API
+        Assertions.assertEquals(newProduct, APIUtils.getLastProduct(), "Новый продукт не добавился");
+
         //Проверяем, что продукт добавленный через API совпадает с продуктом в DB
         Assertions.assertEquals(newProduct, DBUtils.selectProduct(newProduct, jdbcTemplate),
                 "Продукты не одинаковые");
@@ -34,6 +37,9 @@ public class AddProductTest extends BaseTest {
 
         //Проверяем, что продукт удалился из DB
         Assertions.assertNull(DBUtils.selectProduct(newProduct, jdbcTemplate), "Продукт не удалился");
+
+        //Проверяем, что продукт удалился через API
+        Assertions.assertNotEquals(newProduct, APIUtils.getLastProduct(), "Продукт не удалился");
     }
 
 }
